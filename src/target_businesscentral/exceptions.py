@@ -1,10 +1,10 @@
 """
-target-booksy Exceptions
+target-businesscentral Exceptions
 """
 
 
-class BooksynTargetError(Exception):
-    """The base exception class for target-booksy.
+class BusinessCentralError(Exception):
+    """The base exception class for target-businesscentral.
 
     Parameters:
         msg (str): Short description of the error.
@@ -12,33 +12,37 @@ class BooksynTargetError(Exception):
     """
 
     def __init__(self, msg, response=None):
-        super(BooksynTargetError, self).__init__(msg)
+        super(BusinessCentralError, self).__init__(msg)
         self.message = msg
         self.response = response
 
     def __str__(self):
-        return repr(self.message)
+        return self.message
 
 
-class AuthenticationError(BooksynTargetError):
+class AuthenticationError(BusinessCentralError):
     """OAuth2 token request failed — bad client_id, secret, or scope."""
 
 
-class TokenExpiredError(BooksynTargetError):
+class TokenExpiredError(BusinessCentralError):
     """Bearer token expired mid-run — triggers re-authentication."""
 
 
-class EntryPostError(BooksynTargetError):
+class EntryPostError(BusinessCentralError):
     """POST to bc_gj_lines failed with a non-2xx response."""
 
 
-class TransformError(BooksynTargetError):
+class TransformError(BusinessCentralError):
     """CSV transformation failed — missing or invalid field values."""
 
 
-class RateLimitError(BooksynTargetError):
+class MappingConfigError(BusinessCentralError):
+    """mapping_config.json is missing, malformed, or uses an unknown source."""
+
+
+class RateLimitError(BusinessCentralError):
     """Business Central API returned HTTP 429."""
 
 
-class ServerError(BooksynTargetError):
+class ServerError(BusinessCentralError):
     """Business Central API returned HTTP 5xx."""
